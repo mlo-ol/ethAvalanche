@@ -41,3 +41,6 @@ The DegenToken contract is an ERC20 token that includes additional functionaliti
    - Go to [Snowtrace](https://testnet.snowtrace.io/), the block explorer for the Avalanche testnet.
    - Search for your deployed contract using the contract address.
    - Use Remix or Snowtrace's contract interaction tools to interact with the deployed contract. You can mint tokens, transfer tokens, redeem tokens for in-game items, check balances, and burn tokens as described in the contract functions.
+
+## Author
+Mia Enciso
