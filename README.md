@@ -18,7 +18,6 @@ The DegenToken contract is an ERC20 token that includes additional functionaliti
 
 ## Deployment
 
-```markdown
 1. **Set Up Development Environment**
    - Install MetaMask, a cryptocurrency wallet, as a browser extension. Set it up and connect it to the Avalanche Fuji C-Chain testnet.
    - Go to the [Avalanche Faucet](https://core.app/tools/testnet-faucet/?subnet=c&token=c) to request AVAX tokens, which are needed for gas fees on the testnet.
