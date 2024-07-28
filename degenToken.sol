@@ -20,11 +20,9 @@ contract DegenToken is ERC20, Ownable, ERC20Burnable {
     GameStoreItem[] public products;
 
     constructor() ERC20("Degen", "DGN"){
-        products.push(GameStoreItem("Sword", 600));
-        products.push(GameStoreItem("Armor", 500)); 
-        products.push(GameStoreItem("Shield", 750));  
-        products.push(GameStoreItem("Heal Potion", 50));  
-        products.push(GameStoreItem("Pet", 350));  
+        products.push(GameStoreItem("Official Degen NFT", 600));
+        products.push(GameStoreItem("DGN T-shirt", 500)); 
+        products.push(GameStoreItem("DGN Mystery Box", 1000));  
     }
 
     function mint(address to, uint256 amount) public onlyOwner {
@@ -50,30 +48,32 @@ contract DegenToken is ERC20, Ownable, ERC20Burnable {
         burn(_value);
     }
 
-    function showStoreItems() external view returns (string memory message, string[] memory itemNames, uint256[] memory itemIndexes) {
+    function showStoreItems() external view returns (string memory message, string[] memory itemNames, uint256[] memory itemIndexes, uint256[] memory itemPrices) {
     uint256 itemCount = products.length;
     itemNames = new string[](itemCount);
     itemIndexes = new uint256[](itemCount);
+    itemPrices = new uint256[](itemCount);
 
     for (uint256 i = 0; i < itemCount; i++) {
         itemNames[i] = products[i].name;
         itemIndexes[i] = i;
+        itemPrices[i] = products[i].price;
     }
 
-    message = "The following are the names and indexes of the products in our store:";
-    return (message, itemNames, itemIndexes);
+    message = "The following are the names, indexes, and prices of the products in our store:";
+    return (message, itemNames, itemIndexes, itemPrices);
 }
 
-    event RedeemFunc(address indexed sender, uint256 itemIndex, uint256 balance, string productName);
+    event RedeemFunc(address indexed sender, uint256 itemIndex, uint256 balance, string productName, uint256 itemPrice);
     
     function redeemTokens(uint256 _prodIndex) external payable {
+    require(_prodIndex < products.length, "We don't have that in our store. Use the showStoreItems function to view the indexes and prices of all our products.");
     GameStoreItem storage item = products[_prodIndex];
     uint256 itemPrice = item.price;
-    require(_prodIndex < products.length, "We don't have that in our store");
     require(itemPrice <= balanceOf(msg.sender), "You do not have enough DGN Tokens");
 
     _burn(msg.sender, itemPrice);
-    emit RedeemFunc(msg.sender, _prodIndex, balanceOf(msg.sender), item.name);
+    emit RedeemFunc(msg.sender, _prodIndex, balanceOf(msg.sender), item.name, itemPrice);
 }
 
 }
